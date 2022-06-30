@@ -4,13 +4,13 @@ const session = require('express-session');
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const connectMongo = require('connect-mongo');
-const Usuario = require('../utils/usuarios');
+const Usuario = require('../controllers/usuarios');
 const usuario = new Usuario();
 require('dotenv').config();
 
 app.use(session({
   store: connectMongo.create({
-    mongoUrl: `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@cluster0.33nzl.mongodb.net/${process.env.SESSIONSDB}?retryWrites=true&w=majority`,
+    mongoUrl: `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.SESSIONSDB}?retryWrites=true&w=majority`,
     mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
     ttl: 600
   }),
@@ -30,7 +30,7 @@ passport.use('registro',new localStrategy(
             if(existe){
                 return done(null, false)
             }else{
-                await usuario.addUser(username,password);
+                await usuario.addUser(req.body,req.file);
                 return done(null, {email: username})
             }
         }catch(e){

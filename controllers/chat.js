@@ -10,7 +10,7 @@ class Chat{
 
     async connectDB(){
         try{
-            const URL = `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@cluster0.33nzl.mongodb.net/${process.env.CHATDB}?retryWrites=true&w=majority`;
+            const URL = `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.CHATDB}?retryWrites=true&w=majority`;
             let connect = await mongoose.connect(URL,{
                 useNewUrlParser: true,
                 useUnifiedTopology: true

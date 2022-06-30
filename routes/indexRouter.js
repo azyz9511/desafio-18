@@ -12,7 +12,7 @@ require('dotenv').config();
 router.use(cookieParser());
 router.use(session({
   store: connectMongo.create({
-    mongoUrl: `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@cluster0.33nzl.mongodb.net/${process.env.SESSIONSDB}?retryWrites=true&w=majority`,
+    mongoUrl: `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.SESSIONSDB}?retryWrites=true&w=majority`,
     mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
     ttl: 600
   }),

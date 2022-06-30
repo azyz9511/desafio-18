@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js --modo='CLUSTER'",
+    "start": "nodemon server.js",
     "test": "autocannon http://localhost:8080/info -d 20 -c 100"
   },
   "author": "",
@@ -18,7 +18,9 @@
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "log4js": "^6.5.2",
+    "mime-types": "^2.1.35",
     "mongoose": "^6.3.2",
+    "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "session-file-store": "^1.5.0",

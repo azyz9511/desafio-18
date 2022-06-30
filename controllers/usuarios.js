@@ -11,7 +11,7 @@ class Usuario{
 
     async connectDB(){
         try{
-            const URL = `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@cluster0.33nzl.mongodb.net/${process.env.USERSDB}?retryWrites=true&w=majority`;
+            const URL = `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.USERSDB}?retryWrites=true&w=majority`;
             let connect = await mongoose.connect(URL,{
                 useNewUrlParser: true,
                 useUnifiedTopology: true
@@ -32,12 +32,17 @@ class Usuario{
             null);
     }
     
-    async addUser(username,password){
+    async addUser(user,file){
         try{
             await this.connectDB();
             const newUser = {
-                email: username,
-                password: await this.encryptPass(password)
+                email: user.username,
+                password: await this.encryptPass(user.password),
+                nombre: user.nombre,
+                direccion: user.direccion,
+                edad: user.edad,
+                numTel: user.numtel,
+                avatar: file.path 
             };
             await usuarioSchema.create(newUser);
             mongoose.disconnect();

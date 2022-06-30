@@ -11,11 +11,11 @@ const logConsole = log4js.getLogger('consola');
 const logWarn = log4js.getLogger('warn');
 
 // importacion e instancia de la clase Chat
-const Chat = require('./utils/chat');
+const Chat = require('./controllers/chat');
 const chat = new Chat();
 
 // importacion e instancia de la clase Productos
-const Productos = require('./utils/productos');
+const Productos = require('./controllers/productos');
 const productos = new Productos();
 
 // importacion de routers
@@ -23,7 +23,6 @@ const loginRouter = require('./routes/loginRouter');
 const indexRouter = require('./routes/indexRouter');
 const registerRouter = require('./routes/registerRouter');
 const infoRouter = require('./routes/infoRouter');
-const randomsRouter = require('./routes/randomsRouter');
 
 // Inicializar express, http y socket.io
 const app = express();
@@ -39,7 +38,6 @@ app.use('/login',loginRouter);
 app.use('/',indexRouter);
 app.use('/register',registerRouter);
 app.use('/info',infoRouter);
-app.use('/api/randoms',randomsRouter);
 app.use((req, res, next) => { 
     logWarn.warn(`Ruta ${req.url} método ${req.method} no implementados`);
     res.status(404).json({error: 404, descripcion: `Ruta ${req.url} método ${req.method} no implementados`});
