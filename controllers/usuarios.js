@@ -11,7 +11,7 @@ class Usuario{
 
     async connectDB(){
         try{
-            const URL = `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.USERSDB}?retryWrites=true&w=majority`;
+            const URL = process.env.URLDB;
             let connect = await mongoose.connect(URL,{
                 useNewUrlParser: true,
                 useUnifiedTopology: true
@@ -22,14 +22,22 @@ class Usuario{
     }
 
     async validarPass(user, password){
-        return bCrypt.compareSync(password, user.password);
+        try{
+            return bCrypt.compareSync(password, user.password);
+        }catch(e){
+            console.log(e);
+        }
     }
 
     async encryptPass(password){
-        return bCrypt.hashSync(
-            password,
-            bCrypt.genSaltSync(10),
-            null);
+        try{
+            return bCrypt.hashSync(
+                password,
+                bCrypt.genSaltSync(10),
+                null);
+        }catch(e){
+            console.log(e);
+        }
     }
     
     async addUser(user,file){

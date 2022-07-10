@@ -1,27 +1,9 @@
 const socket = io.connect();
 
-// tabla productos faker
+// funcionalidad de carrito
+// Crear carrito
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
-socket.on('productosFaker', data => {
-    render(data);
-});
-
-function render(data) {
-    const table = `<tr><th><h5>Nombre</h5></th><th><h5>Precio</h5></th><th><h5>Foto</h5></th></tr>`;
-    const html = data
-    .map((elem, index) => {
-        return `<tr>
-        <td>${elem.nombre}</td>
-        <td>${elem.precio}</td>
-        <td><img width="50" src="${elem.foto}"></td>
-        </tr>`
-    })
-    .join(' ');
-    const tableComplete = table + html;
-    document.getElementById('productos').innerHTML = tableComplete;
-    
-}
 
 // chat
 // -----------------------------------------------------------------------------------------------------------------------------------------
@@ -41,7 +23,6 @@ formChat.addEventListener('submit',(e) => {
             avatar: document.getElementById('avatar').value
         },
         text: document.getElementById('texto').value,
-                // id: Date.now(),
         fyh: `${fyh.getDate()}/${(fyh.getMonth() + 1)}/${fyh.getFullYear()} ${fyh.getHours()}:${fyh.getMinutes()}:${fyh.getSeconds()}`
     };
 

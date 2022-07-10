@@ -24,11 +24,11 @@ const upload = multer({storage : storage});
 router.use(cookieParser());
 router.use(session({
   store: connectMongo.create({
-    mongoUrl: `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.SESSIONSDB}?retryWrites=true&w=majority`,
+    mongoUrl: process.env.URLDB,
     mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
     ttl: 600
   }),
-  secret: `${process.env.SECRETDB}`,
+  secret: process.env.SECRETDB,
   resave: true,
   saveUninitialized: true
 }));

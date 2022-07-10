@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const carritoSchema = require('../DB/carritoSchema');
 const Product = require('./productos');
 const product = new Product();
+const {newOrder} = require('../utils/nodemailer');
+const { newOrderWp } = require('../utils/twilio');
 require('dotenv').config();
 
 class Car{
@@ -12,7 +14,7 @@ class Car{
 
     async connectDB(){
         try{
-            const URL = `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.CARRITODB}?retryWrites=true&w=majority`;
+            const URL = process.env.URLDB;
             let connect = await mongoose.connect(URL,{
                 useNewUrlParser: true,
                 useUnifiedTopology: true
@@ -53,10 +55,10 @@ class Car{
             if(car.length !== 0){
                 await carritoSchema.deleteOne({id:id});
                 mongoose.disconnect();
-                return 'Producto eliminado con exito';
+                return 'Carrito eliminado con exito';
             }else{
                 mongoose.disconnect();
-                return `No existe el producto con id ${id}`
+                return `No existe el carrito con id ${id}`
             }
         }catch (e){
             return `Ha ocurrido el siguiente error: ${e}`;
@@ -122,6 +124,18 @@ class Car{
             }
         }catch (e){
             return `Ha ocurrido el siguiente error: ${e}`;
+        }
+    }
+
+    async carFin(nombre,email){
+        try{
+            const carrito = await this.listCar(1);
+            await newOrder(nombre,email,carrito);
+            await newOrderWp(nombre,email,carrito);
+            await this.delCar(1);
+            return 'Pedido realizado con exito';
+        }catch(e){
+            console.log(e);            
         }
     }
 

@@ -6,15 +6,16 @@ const localStrategy = require('passport-local').Strategy;
 const connectMongo = require('connect-mongo');
 const Usuario = require('../controllers/usuarios');
 const usuario = new Usuario();
+const {newUser} = require('../utils/nodemailer');
 require('dotenv').config();
 
 app.use(session({
   store: connectMongo.create({
-    mongoUrl: `mongodb+srv://${process.env.USERNAMEDB}:${process.env.PASSWORDDB}@proyectofinal.3xa4amn.mongodb.net/${process.env.SESSIONSDB}?retryWrites=true&w=majority`,
+    mongoUrl: process.env.URLDB,
     mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
     ttl: 600
   }),
-  secret: `${process.env.SECRETDB}`,
+  secret: process.env.SECRETDB,
   resave: true,
   saveUninitialized: true
 }));
@@ -31,6 +32,7 @@ passport.use('registro',new localStrategy(
                 return done(null, false)
             }else{
                 await usuario.addUser(req.body,req.file);
+                await newUser(req.body);
                 return done(null, {email: username})
             }
         }catch(e){

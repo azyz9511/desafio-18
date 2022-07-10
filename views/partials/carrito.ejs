@@ -2,12 +2,12 @@
     <div class="bg-light border border-secondary rounded shadow p-3 mb-5"> 
         <% if(!carrito){ %>
             <h2>No hay carrito</h2>
-            <a href="/carrito/addCar" class="btn btn-success text-center">Iniciar carrito</a>
+            <a href="/carrito/addCar" id="startCar" class="btn btn-success text-center">Iniciar carrito</a>
         <% }else if(carrito.productos.length !== 0){ %>
             <table class="table text-secondary">
                 <tr>
-                    <td colspan="4"> <h2 class="text-center text-secondary">Carrito</h2> </td>
-                    <td> <a href="/carrito/delCar" class="btn btn-danger text-center">Eliminar carrito</a> </td>
+                    <td colspan="3"> <h2 class="text-center text-secondary">Carrito</h2> </td>
+                    <td colspan="2"> <a href="/carrito/delCar" class="btn btn-danger text-center">Eliminar carrito</a> </td>
                 </tr>
                 <tr>
                     <td> <b>Foto</b> </td>
@@ -25,6 +25,12 @@
                     <td> <a href="/carrito/delProd/<%= carrito.productos[i].timestamp %>" class="btn btn-outline-danger text-center">Eliminar del carrito</a> </td>
                 </tr>
             <% } %>
+                <tr>
+                    <td colspan="5"> 
+                        <div align="center">
+                            <a href="/carrito/finCar/<%= user.nombre %>/<%= user.email %>/<%= user.numTel %>" class="btn btn-success text-center">Realizar pedido</a> </td>
+                        </div>
+                </tr>
             </table>
         <% } else {%>
             <h3>Carrito vacio</h3>
