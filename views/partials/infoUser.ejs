@@ -1,0 +1,30 @@
+<div class=" col-4 align-items-center justify-content-center" style="margin-top:2%">
+    <div class="bg-light border border-secondary rounded shadow p-3 mb-5"> 
+        <table class="table text-secondary">
+            <tr>
+                <td colspan="2">
+                    <h2 class="text-center text-secondary">Bienvenido</h2>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img width="200" src=<%= user.avatar %> >
+                </td>
+                <td>
+                    <h3>Nombre: <%= user.nombre %></h3>
+                    <h3>Edad: <%= user.edad %> años</h3>
+                    <h3>Dirección: <%= user.direccion %></h3>
+                    <h3>Email: <%= user.email %></h3>
+                    <h3>Numero telefónico: <%= user.numTel %></h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div align="center">
+                        <a href="/login/logout" class="btn btn-danger text-center">Cerrar Sesión</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

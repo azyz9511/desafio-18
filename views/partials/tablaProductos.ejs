@@ -1,26 +1,31 @@
-<div class=" row align-items-center justify-content-center" style="margin-top:3%">
-    <div class="col-sm-4 bg-light border border-secondary rounded shadow p-3 mb-5"> 
-        <table class="table text-secondary">
-            <tr>
-                <td>
-                    <h2 class="text-center text-secondary">Bienvenido</h2>
-                    <h3 class="text-center text-secondary"><%= nombre %></h3>
-                </td>
-                <td>
-                    <a href="/login/logout" class="btn btn-danger">Cerrar Sesión</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class=" row align-items-center justify-content-center">
-    <div class="col-sm-4 bg-light border border-secondary rounded shadow p-3 mb-5"> 
-        
-        <div class="table-responsive">
-        <h2 class="text-center text-secondary">Productos</h2>
-        <hr>
-            <table class="table text-secondary" id="productos">
+<div class="col-4 align-items-center justify-content-center" style="margin-top:2%">
+    <div class="bg-light border border-secondary rounded shadow p-3 mb-5"> 
+        <% if(products.length == 0){ %>
+            <h2>No hay productos</h2>
+        <% }else{ %>
+            <table class="table text-secondary">
+                <tr>
+                    <td colspan="6"> <h2 class="text-center text-secondary">Productos</h2> </td>
+                </tr>
+                <tr>
+                    <td> <b>Foto</b> </td>
+                    <td> <b>Código</b> </td>
+                    <td> <b>Nombre</b> </td>
+                    <td> <b>descripción</b> </td>
+                    <td> <b>Precio</b> </td>
+                    <td> <b>Accion</b> </td>
+                </tr>
+            <% for (let i = 0; i < products.length; i++) { %>
+                <tr>
+                    <td> <img width="70" src=<%= products[i].foto %> > </td>
+                    <td> <%= products[i].codigo %> </td>
+                    <td> <%= products[i].nombre %> </td>
+                    <td> <%= products[i].descripcion %> </td>
+                    <td> $<%= products[i].precio %> </td>
+                    <td> <a href="/carrito/addProd/<%= products[i].id %>" class="btn btn-outline-primary text-center">Agregar al carrito</a> </td>
+                </tr>
+            <% }%>
             </table>
-        </div>
+        <% }%>
     </div>
 </div>

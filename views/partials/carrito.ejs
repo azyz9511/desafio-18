@@ -1,0 +1,35 @@
+<div class=" col-4 align-items-center justify-content-center" style="margin-top:2%">
+    <div class="bg-light border border-secondary rounded shadow p-3 mb-5"> 
+        <% if(!carrito){ %>
+            <h2>No hay carrito</h2>
+            <a href="/carrito/addCar" class="btn btn-success text-center">Iniciar carrito</a>
+        <% }else if(carrito.productos.length !== 0){ %>
+            <table class="table text-secondary">
+                <tr>
+                    <td colspan="4"> <h2 class="text-center text-secondary">Carrito</h2> </td>
+                    <td> <a href="/carrito/delCar" class="btn btn-danger text-center">Eliminar carrito</a> </td>
+                </tr>
+                <tr>
+                    <td> <b>Foto</b> </td>
+                    <td> <b>Nombre</b> </td>
+                    <td> <b>descripción</b> </td>
+                    <td> <b>Precio</b> </td>
+                    <td> <b>Accion</b> </td>
+                </tr>
+            <% for (let i = 0; i < carrito.productos.length; i++) { %>
+                <tr>
+                    <td> <img width="70" src=<%= carrito.productos[i].foto %> > </td>
+                    <td> <%= carrito.productos[i].nombre %> </td>
+                    <td> <%= carrito.productos[i].descripcion %> </td>
+                    <td> $<%= carrito.productos[i].precio %> </td>
+                    <td> <a href="/carrito/delProd/<%= carrito.productos[i].timestamp %>" class="btn btn-outline-danger text-center">Eliminar del carrito</a> </td>
+                </tr>
+            <% } %>
+            </table>
+        <% } else {%>
+            <h3>Carrito vacio</h3>
+            <h3>Ya puedes agregarle productos</h3>
+            <td> <a href="/carrito/delCar" class="btn btn-outline-danger text-center">Eliminar carrito</a> </td>
+        <% } %>
+    </div>
+</div>

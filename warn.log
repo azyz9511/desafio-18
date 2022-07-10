@@ -1,0 +1,11 @@
+[2022-06-30T02:19:47.934] [WARN] warn - Ruta /public/img/avatar-1656560618161.png método GET no implementados
+[2022-06-30T21:18:43.867] [WARN] warn - Ruta /favicon.ico método GET no implementados
+[2022-07-01T21:41:44.466] [WARN] warn - Ruta /favicon.ico método GET no implementados
+[2022-07-03T20:50:30.851] [WARN] warn - Ruta /favicon.ico método GET no implementados
+[2022-07-04T22:48:28.126] [WARN] warn - Ruta /favicon.ico método GET no implementados
+[2022-07-05T00:14:27.245] [WARN] warn - Ruta /api/productos/1 método GET no implementados
+[2022-07-05T00:14:34.232] [WARN] warn - Ruta /productos/1 método GET no implementados
+[2022-07-05T00:14:40.134] [WARN] warn - Ruta /producto/1 método GET no implementados
+[2022-07-09T15:44:05.294] [WARN] warn - Ruta /favicon.ico método GET no implementados
+[2022-07-09T16:23:44.685] [WARN] warn - Ruta /carrito/addCar/1 método GET no implementados
+[2022-07-09T21:12:35.049] [WARN] warn - Ruta /favicon.ico método GET no implementados

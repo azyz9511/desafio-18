@@ -42,7 +42,7 @@ class Usuario{
                 direccion: user.direccion,
                 edad: user.edad,
                 numTel: user.numtel,
-                avatar: file.path 
+                avatar: 'img/'+ file.filename 
             };
             await usuarioSchema.create(newUser);
             mongoose.disconnect();
