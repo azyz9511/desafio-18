@@ -2,13 +2,13 @@
 const express = require('express');
 const {Server: HttpServer} = require('http');
 const {Server: IOServer} = require('socket.io');
-const yargs = require('yargs/yargs')(process.argv.slice(2))
-const args = yargs.default({ puerto:8080, modo:'FORK' }).argv;
 const cpus = require('os').cpus().length;
 const cluster = require('cluster');
 const log4js = require('./utils/logs');
 const logConsole = log4js.getLogger('consola');
 const logWarn = log4js.getLogger('warn');
+const PORT = process.env.PORT || 8080;
+require('dotenv').config();
 
 // importacion e instancia de la clase Chat
 const Chat = require('./controllers/chat');
@@ -73,7 +73,7 @@ io.on('connection',async (socket) => {
 
 //inicio de servidor
 
-if(args.modo === 'CLUSTER' && cluster.isPrimary){
+if(process.env.MODOSERVER === 'CLUSTER' && cluster.isPrimary){
     console.log(`Master ${process.pid} is running`);
     for (let i = 0; i < cpus; i++) {
         cluster.fork();        
@@ -83,8 +83,8 @@ if(args.modo === 'CLUSTER' && cluster.isPrimary){
         cluster.fork();
     });
 }else{
-    httpserver.listen(args.puerto, () => {
-        console.log(`proceso ${process.pid} corriendo en el puerto ${args.puerto}`);
+    httpserver.listen(PORT, () => {
+        console.log(`proceso ${process.pid} corriendo en el puerto ${PORT}`);
     });   
     console.log(`worker ${process.pid} is running`);
 }
