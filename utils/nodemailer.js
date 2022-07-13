@@ -1,3 +1,5 @@
+const log4js = require('../utils/logs');
+const logError = log4js.getLogger('error');
 const {createTransport} = require('nodemailer');
 require('dotenv').config();
 
@@ -25,9 +27,8 @@ async function newUser(data){
                 <b>Edad:</b> ${data.edad}<br>
                 <b>Numero Telefonico:</b> ${data.numtel}<br>`
         });
-        console.log(info)
     } catch (e) {
-        console.log(e)
+        logError.error(e)
     }
 }
 
@@ -55,9 +56,9 @@ async function newOrder(nombre,email,carrito){
                 <br> ${productos}
                 <h2>Total de la compra: $${total}</h2>`
         });
-        console.log('correo enviado');
+        return 'correo enviado con exito';
     } catch (e) {
-        console.log(e)
+        logError.error(e)
     }
 }
 

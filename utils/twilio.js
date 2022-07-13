@@ -1,3 +1,5 @@
+const log4js = require('../utils/logs');
+const logError = log4js.getLogger('error');
 const twilio = require('twilio');
 require('dotenv').config();
 
@@ -31,10 +33,9 @@ async function newOrderWp(nombre,email,carrito){
             from: process.env.TWILIOWP,
             to: process.env.NUMADMIN
         });
-        console.log('wp enviado');
         return 'WhatsApp enviado con exito';
     }catch(e){
-        console.log(e);
+        logError.error(e);
     }
 }
 
@@ -45,10 +46,9 @@ async function newOrderSms(numTel){
             from: process.env.NUMTWILIO,
             to: numTel
         })
-        console.log('sms enviado');
         return 'SMS enviado con exito';
     }catch(e){
-        console.log(e);
+        logError.error(e);
     }
 }
 

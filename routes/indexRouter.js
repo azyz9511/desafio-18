@@ -5,7 +5,6 @@ const session = require('express-session');
 const connectMongo = require('connect-mongo');
 const passport = require('../DB/configPassport');
 const log4js = require('../utils/logs');
-const logConsole = log4js.getLogger('consola');
 const logError = log4js.getLogger('error');
 const Usuario = require('../controllers/usuarios');
 const usuario = new Usuario();
@@ -34,7 +33,6 @@ router.use(passport.session());
 // Ruta--------------------------------------------------------------------
 router.get('/',async (req, res) => {
   if(req.isAuthenticated()){
-    logConsole.info('El usuario ya estaba logueado');
     const email = req.session.passport.user;
     const user = await usuario.findUser(email);
     const products = await producto.getProducts();

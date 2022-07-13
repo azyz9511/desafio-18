@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const productoSchema = require('../DB/productoSchema');
+const log4js = require('../utils/logs');
+const logError = log4js.getLogger('error');
 require('dotenv').config();
 
 class Producto{
@@ -15,7 +17,7 @@ class Producto{
                 useUnifiedTopology: true
             });
         }catch (e){
-            console.log(e);
+            logError.error(e);
         }
     }
 

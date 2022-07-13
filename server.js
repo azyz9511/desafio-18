@@ -7,6 +7,7 @@ const cluster = require('cluster');
 const log4js = require('./utils/logs');
 const logConsole = log4js.getLogger('consola');
 const logWarn = log4js.getLogger('warn');
+const logError = log4js.getLogger('error');
 const PORT = process.env.PORT || 8080;
 require('dotenv').config();
 
@@ -51,7 +52,7 @@ app.use((req, res, next) => {
 io.on('connection',async (socket) => {
 
     //mensaje de usuario conectado
-    logConsole.info('Usuario conectado');
+    // logConsole.info('Usuario conectado');
 
     //socket para chat
     socket.on('nuevoMensaje',async data => {
@@ -60,31 +61,30 @@ io.on('connection',async (socket) => {
             const mensajes = await chat.readMessages();
             io.sockets.emit('historialGlobal',mensajes);
         }catch (e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     });
     try{
         const mensajes = await chat.readMessages();
         socket.emit('historialChat',mensajes);
     }catch (e){
-        console.log(`Ha ocurrido el siguiente error: ${e}`);
+        logError.error(`Ha ocurrido el siguiente error: ${e}`);
     }
 });
 
 //inicio de servidor
 
 if(process.env.MODOSERVER === 'CLUSTER' && cluster.isPrimary){
-    console.log(`Master ${process.pid} is running`);
+    logConsole.info(`Master ${process.pid} is running`);
     for (let i = 0; i < cpus; i++) {
         cluster.fork();        
     }
     cluster.on('exit',(worker, code, signal) => {
-        console.log(`worker ${worker.process.pid} died`);
+        logConsole.info(`worker ${worker.process.pid} died`);
         cluster.fork();
     });
 }else{
     httpserver.listen(PORT, () => {
-        console.log(`proceso ${process.pid} corriendo en el puerto ${PORT}`);
+        logConsole.info(`proceso ${process.pid} corriendo en el puerto ${PORT}`);
     });   
-    console.log(`worker ${process.pid} is running`);
 }

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const mensajeSchema = require('../DB/mensajeSchema');
+const log4js = require('../utils/logs');
+const logError = log4js.getLogger('error');
 require('dotenv').config();
 
 class Chat{
@@ -16,7 +18,7 @@ class Chat{
                 useUnifiedTopology: true
             });
         }catch (e){
-            console.log(e);
+            logError.error(e);
         }
     }
     
@@ -25,9 +27,8 @@ class Chat{
             await this.connectDB();
             await mensajeSchema.create(mensaje);
             mongoose.disconnect();
-            console.log('mensaje guardado con exito');
         }catch (e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
     
@@ -38,7 +39,7 @@ class Chat{
             mongoose.disconnect();
             return data;
         }catch (e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
 

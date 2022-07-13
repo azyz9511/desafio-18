@@ -3,36 +3,61 @@ const router = express.Router();
 const Carrito = require('../controllers/carrito');
 const carrito = new Carrito();
 const {newOrderSms} = require('../utils/twilio');
+const log4js = require('../utils/logs');
+const logConsole = log4js.getLogger('consola');
+const logError = log4js.getLogger('error');
 
 router.get('/addCar',async (req, res) => {
-    await carrito.createCar();
-    console.log('carrito creado con exito');
-    res.redirect('/');
+    try{
+        await carrito.createCar();
+        logConsole.info('carrito creado con exito');
+        res.redirect('/');
+    }catch(e){
+        logError.error(e);
+    }
 });
 
 router.get('/delCar',async (req, res) => {
-    await carrito.delCar(1);
-    console.log('carrito eliminado con exito');
-    res.redirect('/');
+    try{
+        await carrito.delCar(1);
+        logConsole.info('carrito eliminado con exito');
+        res.redirect('/');
+    }catch(e){
+        logError.error(e);
+    }
 });
 
 router.get('/listCar',async (req, res) => {
-    const car = await carrito.listCar(1);
-    res.send({car:car});
+    try{
+        const car = await carrito.listCar(1);
+        res.send({car:car});
+    }catch(e){
+        logError.error(e);
+    }
 });
 
 router.get('/addProd/:idProduct',async (req, res) => {
-    const car = await carrito.listCar(1);
-    if(!car){
-        await carrito.createCar();
+    try{
+        const car = await carrito.listCar(1);
+        if(!car){
+            await carrito.createCar();
+        }
+        await carrito.addProdCar(1,req.params.idProduct);
+        logConsole.info('Producto agregado al carrito con exito');
+        res.redirect('/');
+    }catch(e){
+        logError.error(e);
     }
-    await carrito.addProdCar(1,req.params.idProduct);
-    res.redirect('/');
 });
 
 router.get('/delProd/:id',async (req, res) => {
-    await carrito.deleteProdCar(1,req.params.id);
-    res.redirect('/');
+    try{
+        await carrito.deleteProdCar(1,req.params.id);
+        logConsole.info('Producto eliminado del carrito con exito');
+        res.redirect('/');
+    }catch(e){
+        logError.error(e);
+    }
 });
 
 router.get('/finCar/:nombre/:email/:numtel', async (req, res) => {
@@ -42,14 +67,12 @@ router.get('/finCar/:nombre/:email/:numtel', async (req, res) => {
         const numTel = req.params.numtel;
 
         const resEmail = await carrito.carFin(nombre,email);
-        console.log(resEmail);
-
         const resSms = await newOrderSms(numTel);
-        console.log(resSms);
 
+        logConsole.info(resEmail);
         res.render('pages/pedidoExito');
     }catch(e){
-        console.log(e);
+        logError.error(e);
     }
 })
 

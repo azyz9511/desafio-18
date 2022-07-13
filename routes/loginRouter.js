@@ -27,16 +27,14 @@ router.use(passport.session());
 // Rutas---------------------------------------------------------------------------------------------------
 router.get('/',(req, res) => {
     if(req.isAuthenticated()){
-        logConsole.info('El usuario si estaba logueado');
         res.redirect('/')
     }else{
-        logError.error('El usuario no estaba logueado');
         res.render('pages/login');
     }
 });
 
 router.get('/error', (req, res) => {
-    logError.error('Ah ocurrido un error');
+    logError.error('Ah ocurrido un error de autenticacion');
     res.render('pages/loginError')
 })
 

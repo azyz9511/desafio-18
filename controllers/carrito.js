@@ -4,6 +4,8 @@ const Product = require('./productos');
 const product = new Product();
 const {newOrder} = require('../utils/nodemailer');
 const { newOrderWp } = require('../utils/twilio');
+const log4js = require('../utils/logs');
+const logError = log4js.getLogger('error');
 require('dotenv').config();
 
 class Car{
@@ -20,7 +22,7 @@ class Car{
                 useUnifiedTopology: true
             });
         }catch (e){
-            console.log(e);
+            logError.error(e)
         }
     }
 
@@ -90,13 +92,10 @@ class Car{
                     productos: productoId
                 }});
                 mongoose.disconnect();
-                console.log(`Producto agregado al carrito ${idCar} con exito`);
                 return `Producto agregado al carrito ${idCar} con exito`;
             }else{
-                console.log('No existe el producto o el carrito');
                 return 'No existe el producto o el carrito';                                                                                                                                                                                                                                                                                                                                                                  }
         }catch (e){
-            console.log(e);
             return `Ha ocurrido el siguiente error: ${e}`;
         }
     }
@@ -135,7 +134,7 @@ class Car{
             await this.delCar(1);
             return 'Pedido realizado con exito';
         }catch(e){
-            console.log(e);            
+            logError.error(e);            
         }
     }
 

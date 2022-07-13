@@ -7,6 +7,9 @@ const connectMongo = require('connect-mongo');
 const Usuario = require('../controllers/usuarios');
 const usuario = new Usuario();
 const {newUser} = require('../utils/nodemailer');
+const log4js = require('../utils/logs');
+const logConsole = log4js.getLogger('consola');
+const logError = log4js.getLogger('error');
 require('dotenv').config();
 
 app.use(session({
@@ -36,7 +39,7 @@ passport.use('registro',new localStrategy(
                 return done(null, {email: username})
             }
         }catch(e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
 ))
@@ -48,10 +51,11 @@ passport.use('login',new localStrategy(
             if(!existe){
                 return done(null, false);
             }else{
+                logConsole.info('Inicio de sesion con exito');
                 return done(null, existe);
             }
         }catch(e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
 ))
@@ -65,7 +69,7 @@ passport.deserializeUser(async (email, done) => {
         const userDZ = await usuario.findUser(email);
         done(null, userDZ)
     }catch(e){
-        console.log(`Ha ocurrido el siguiente error: ${e}`);
+        logError.error(`Ha ocurrido el siguiente error: ${e}`);
     }
 })
 

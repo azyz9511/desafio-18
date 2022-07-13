@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const usuarioSchema = require('../DB/usuarioSchema');
 const bCrypt = require('bcrypt');
+const log4js = require('../utils/logs');
+const logError = log4js.getLogger('error');
 require('dotenv').config();
 
 class Usuario{
@@ -17,7 +19,7 @@ class Usuario{
                 useUnifiedTopology: true
             });
         }catch (e){
-            console.log(e);
+            logError.error(e);
         }
     }
 
@@ -25,7 +27,7 @@ class Usuario{
         try{
             return bCrypt.compareSync(password, user.password);
         }catch(e){
-            console.log(e);
+            logError.error(e);
         }
     }
 
@@ -36,7 +38,7 @@ class Usuario{
                 bCrypt.genSaltSync(10),
                 null);
         }catch(e){
-            console.log(e);
+            logError.error(e);
         }
     }
     
@@ -55,7 +57,7 @@ class Usuario{
             await usuarioSchema.create(newUser);
             mongoose.disconnect();
         }catch (e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
     
@@ -66,7 +68,7 @@ class Usuario{
             mongoose.disconnect();
             return user;
         }catch (e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
 
@@ -81,7 +83,7 @@ class Usuario{
                 return null;
             }
         }catch (e){
-            console.log(`Ha ocurrido el siguiente error: ${e}`);
+            logError.error(`Ha ocurrido el siguiente error: ${e}`);
         }
     }
 

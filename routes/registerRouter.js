@@ -39,16 +39,14 @@ router.use(passport.session());
 // Rutas--------------------------------------------------------------------------------------------
 router.get('/',(req, res) => {
   if(req.isAuthenticated()){
-    logConsole.info('El usuario si estaba logueado');
     res.redirect('/')
   }else{
-    logError.error('El usuario no estaba logueado');
     res.render('pages/register');
   }
 });
 
 router.get('/error',(req, res) => {
-  logError.error('Ah ocurrido un error');
+  logError.error('Ah ocurrido un error al intentar iniciar sesion');
   res.render('pages/registerError');
 });
 
@@ -60,7 +58,7 @@ router.get('/exito',(req, res) => {
 router.get('/logout',(req, res) => {
   req.logout( err => {
     if (err) { 
-      console.log(err);
+      logError.error(err);
     }
     res.redirect('/register/exito');
   });
