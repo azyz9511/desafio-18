@@ -13,8 +13,9 @@
             <br>
             <input type="number" class="form-control" name="edad" placeholder="Edad" required>
             <br>
-            <input type="text" class="form-control" name="numtel" placeholder="Numero de telefono" required>
-            <br>
+            <input id="numTel" type="tel" class="form-control" name="numtel" placeholder="Numero de telefono" onblur="process(event)" required>
+            <span class="alert alert-danger" style="display: none"></span>
+            <br><br>
             <input type="file" class="form-control" name="avatar" required>
             <br>
             <input type='submit' class="btn btn-outline-success" value="Registrar"> </input>
